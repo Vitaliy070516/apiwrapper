@@ -5,6 +5,11 @@ namespace app\components;
 use Yii;
 
 class Wrapper {
+    /**
+     * @param $limit
+     * @param $offset
+     * @return mixed
+     */
     public static function getBooks($limit, $offset)
     {
         $data = [
@@ -22,6 +27,11 @@ class Wrapper {
         return $out;
     }
 
+    /**
+     * @param $limit
+     * @param $offset
+     * @return mixed
+     */
     public static function getAuthors($limit, $offset)
     {
         $data = [
@@ -39,6 +49,12 @@ class Wrapper {
         return $out;
     }
 
+    /**
+     * @param $limit
+     * @param $offset
+     * @param $authorId
+     * @return mixed
+     */
     public static function getAuthor($limit, $offset, $authorId)
     {
         $data = [
