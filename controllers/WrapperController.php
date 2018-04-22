@@ -8,15 +8,30 @@ use Yii;
 
 class WrapperController extends Controller
 {
+    private $limit;
+    private $offset;
+
+    /**
+     * @param $action
+     * @return bool
+     * @throws \yii\web\BadRequestHttpException
+     */
+    public function beforeAction($action)
+    {
+        $this->limit = Yii::$app->request->get('limit');
+        $this->offset = Yii::$app->request->get('offset');
+        return parent::beforeAction($action);
+    }
+
     /**
      * @return string
      */
     public function actionBooks()
     {
-        $limit = Yii::$app->request->get('limit');
-        $offset = Yii::$app->request->get('offset');
-        $out = Wrapper::getBooks($limit, $offset);
-        return $this->render('books', ['out' => $out]);
+        $out = Wrapper::getBooks($this->limit, $this->offset);
+        Yii::$app->response->data = $out;
+//        or for display in web interface
+//        return $this->render('books', ['out' => $out]);
     }
 
     /**
@@ -24,10 +39,10 @@ class WrapperController extends Controller
      */
     public function actionAuthors()
     {
-        $limit = Yii::$app->request->get('limit');
-        $offset = Yii::$app->request->get('offset');
-        $out = Wrapper::getAuthors($limit, $offset);
-        return $this->render('authors', ['out' => $out]);
+        $out = Wrapper::getAuthors($this->limit, $this->offset);
+        Yii::$app->response->data = $out;
+//        or for display in web interface
+//        return $this->render('authors', ['out' => $out]);
     }
 
     /**
@@ -35,9 +50,9 @@ class WrapperController extends Controller
      */
     public function actionAuthor($authorId)
     {
-        $limit = Yii::$app->request->get('limit');
-        $offset = Yii::$app->request->get('offset');
-        $out = Wrapper::getAuthor($limit, $offset, $authorId);
-        return $this->render('author', ['out' => $out]);
+        $out = Wrapper::getAuthor($this->limit, $this->offset, $authorId);
+        Yii::$app->response->data = $out;
+//        or for display in web interface
+//        return $this->render('author', ['out' => $out]);
     }
 }
