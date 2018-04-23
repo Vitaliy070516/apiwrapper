@@ -3,6 +3,7 @@
 namespace app\components;
 
 use Yii;
+use yii\httpclient\Client;
 
 class Wrapper {
     /**
@@ -12,18 +13,19 @@ class Wrapper {
      */
     public static function getBooks($limit, $offset)
     {
-        $data = [
-            'limit' => $limit,
-            'offset' => $offset,
-        ];
-        $data = http_build_query($data);
-
         $out = '';
-        if ($curl = curl_init()) {
-            curl_setopt($curl, CURLOPT_URL, Yii::$app->params['apiUrl'] . 'books?' . $data);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            $out = curl_exec($curl);
-            curl_close($curl);
+        $url = Yii::$app->params['apiUrl'] . 'books';
+        $client = new Client();
+        $response = $client->createRequest()
+            ->setMethod('get')
+            ->setUrl($url)
+            ->setData([
+                'limit' => $limit,
+                'offset' => $offset,
+            ])
+            ->send();
+        if ($response->isOk) {
+            $out = $response->data;
         }
         return $out;
     }
@@ -35,18 +37,19 @@ class Wrapper {
      */
     public static function getAuthors($limit, $offset)
     {
-        $data = [
-            'limit' => $limit,
-            'offset' => $offset,
-        ];
-        $data = http_build_query($data);
-
         $out = '';
-        if ($curl = curl_init()) {
-            curl_setopt($curl, CURLOPT_URL, Yii::$app->params['apiUrl'] . 'authors?' . $data);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            $out = curl_exec($curl);
-            curl_close($curl);
+        $url = Yii::$app->params['apiUrl'] . 'authors';
+        $client = new Client();
+        $response = $client->createRequest()
+            ->setMethod('get')
+            ->setUrl($url)
+            ->setData([
+                'limit' => $limit,
+                'offset' => $offset,
+            ])
+            ->send();
+        if ($response->isOk) {
+            $out = $response->data;
         }
         return $out;
     }
@@ -59,18 +62,34 @@ class Wrapper {
      */
     public static function getAuthor($limit, $offset, $authorId)
     {
-        $data = [
-            'limit' => $limit,
-            'offset' => $offset,
-        ];
-        $data = http_build_query($data);
+        //$data = [
+        //    'limit' => $limit,
+        //   'offset' => $offset,
+        //];
+        //$data = http_build_query($data);
 
+        //$out = '';
+        //if ($curl = curl_init()) {
+        //    curl_setopt($curl, CURLOPT_URL, Yii::$app->params['apiUrl'] . "authors/{$authorId}/books?" . $data);
+        //    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        //    $out = curl_exec($curl);
+        //    curl_close($curl);
+        //}
+        //return $out;
+        
         $out = '';
-        if ($curl = curl_init()) {
-            curl_setopt($curl, CURLOPT_URL, Yii::$app->params['apiUrl'] . "authors/{$authorId}/books?" . $data);
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-            $out = curl_exec($curl);
-            curl_close($curl);
+        $url = Yii::$app->params['apiUrl'] . "authors/{$authorId}/books";
+        $client = new Client();
+        $response = $client->createRequest()
+            ->setMethod('get')
+            ->setUrl($url)
+            ->setData([
+                'limit' => $limit,
+                'offset' => $offset,
+            ])
+            ->send();
+        if ($response->isOk) {
+            $out = $response->data;
         }
         return $out;
     }
