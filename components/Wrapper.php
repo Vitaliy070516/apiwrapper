@@ -18,12 +18,13 @@ class Wrapper {
         ];
         $data = http_build_query($data);
 
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, Yii::$app->params['apiUrl'] . 'books?' . $data);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        $out = curl_exec($curl);
-        curl_close($curl);
-
+        $out = '';
+        if ($curl = curl_init()) {
+            curl_setopt($curl, CURLOPT_URL, Yii::$app->params['apiUrl'] . 'books?' . $data);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            $out = curl_exec($curl);
+            curl_close($curl);
+        }
         return $out;
     }
 
@@ -40,12 +41,13 @@ class Wrapper {
         ];
         $data = http_build_query($data);
 
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, Yii::$app->params['apiUrl'] . 'authors?' . $data);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        $out = curl_exec($curl);
-        curl_close($curl);
-
+        $out = '';
+        if ($curl = curl_init()) {
+            curl_setopt($curl, CURLOPT_URL, Yii::$app->params['apiUrl'] . 'authors?' . $data);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            $out = curl_exec($curl);
+            curl_close($curl);
+        }
         return $out;
     }
 
@@ -63,12 +65,13 @@ class Wrapper {
         ];
         $data = http_build_query($data);
 
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, Yii::$app->params['apiUrl'] . "authors/{$authorId}/books?" . $data);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        $out = curl_exec($curl);
-        curl_close($curl);
-
+        $out = '';
+        if ($curl = curl_init()) {
+            curl_setopt($curl, CURLOPT_URL, Yii::$app->params['apiUrl'] . "authors/{$authorId}/books?" . $data);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            $out = curl_exec($curl);
+            curl_close($curl);
+        }
         return $out;
     }
 }
