@@ -29,6 +29,7 @@ class WrapperController extends Controller
     public function actionBooks()
     {
         $out = Wrapper::getBooks($this->limit, $this->offset);
+        // если ошибка, то json_encode()
         Yii::$app->response->data = $out;
 //        or for display in web interface
 //        return $this->render('books', ['out' => $out]);
